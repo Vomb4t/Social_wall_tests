@@ -38,7 +38,7 @@ interface SocialWallApi {
 
 @Serializable
 data class SingUpRequest(
-    val userName: String, val password: String
+    val username: String, val password: String
 )
 
 @Serializable
