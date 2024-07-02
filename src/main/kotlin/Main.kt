@@ -9,6 +9,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.POST
+import java.io.IOException
 
 fun main() {
 
@@ -19,29 +20,37 @@ fun main() {
         .client(client.build())    // указать с каким http-клиентом будет вестись работа
         .build().create(SocialWallApi::class.java)
 
-    println(
-       retrofit.singUp(
-            SingUpRequest(
+    try {
+        val response = retrofit.signUp(
+            SignUpRequest(
                 "Retrofit", "Password"
             )
-        ).execute().body()!!.message
-    )
+        ).execute()
+
+        if (response.isSuccessful) {
+            println(response.body()?.message)
+        } else {
+            println("Request failed with code: ${response.code()}")
+        }
+    } catch (e: IOException) {
+        e.printStackTrace()
+    }
 }
 
 interface SocialWallApi {
 
     @POST("/auth/singup")
-    fun singUp(
-        @Body singUpRequest: SingUpRequest    //запрос
-    ): Call<SingUpResponse>   // ответ
+    fun signUp(
+        @Body signUpRequest: SignUpRequest    //запрос
+    ): Call<SignUpResponse>   // ответ
 }
 
 @Serializable
-data class SingUpRequest(
+data class SignUpRequest(
     val username: String, val password: String
 )
 
 @Serializable
-data class SingUpResponse(
+data class SignUpResponse(
     val message: String
 )
