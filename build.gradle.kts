@@ -7,7 +7,7 @@ plugins {
 
 group = "org.example"
 version = "1.0-SNAPSHOT"
-val allureVersion = "2.13.6"
+val allureVersion = "2.22.2"
 
 repositories {
     mavenCentral()
@@ -28,7 +28,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.9.3")
 
     testImplementation("io.qameta.allure:allure-junit5:2.22.2")
-
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:1.8.21") // Используем junit5
     testImplementation(kotlin("test"))
 }
 
